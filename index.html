@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('https://via.placeholder.com/1920x1080'); /* Change to your background image URL */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background: rgb(33, 243, 180);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            background-color: rgb(112, 243, 72);
+            background-image: url("https://cdn.pixabay.com/photo/2017/11/11/18/31/music-player-2939936_960_720.jpg");
+            background-size: cover;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        li:hover {
+            color: #ff6347; /* Change to your desired hover color */
+        }
+        .plst{
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Player</h1>
+        <audio id="audioPlayer" controls src="haryanvi/Baithungi Piya Bolero Mein Amit Dhull 128 Kbps.mp3"></audio>
+        <input type="file" id="fileInput" accept="audio/*">
+        <button id="uploadBtn">Upload Music</button>
+        <h2 class="plst">Playlist</h2>
+        <ul id="playlist"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const fileInput = document.getElementById('fileInput');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const playlist = document.getElementById('playlist');
+
+            // Function to play selected audio
+            const playAudio = (file) => {
+                const audioURL = URL.createObjectURL(file);
+                audioPlayer.src = audioURL;
+                audioPlayer.play();
+            };
+
+            // Event listener for file input change
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    playAudio(file);
+                    addToPlaylist(file);
+                }
+            });
+
+            // Event listener for upload button
+            uploadBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // Function to display uploaded files in playlist
+            const addToPlaylist = (file) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name;
+                listItem.addEventListener('click', () => {
+                    playAudio(file);
+                });
+                playlist.appendChild(listItem);
+            };
+        });
+    </script>
+</body>
+</html>
